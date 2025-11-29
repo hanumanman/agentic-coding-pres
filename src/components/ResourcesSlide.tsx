@@ -1,4 +1,4 @@
-export default function Slide8() {
+export default function ResourcesSlide() {
   return (
     <div className="slide">
       <h2>📚 Tài Nguyên Học Tập</h2>
@@ -33,13 +33,6 @@ export default function Slide8() {
             <li>AI Engineering blogs</li>
           </ul>
         </div>
-      </div>
-
-      <div className="title-slide" style={{ marginTop: "3rem" }}>
-        <h1 style={{ fontSize: "3rem" }}>🎉 Cảm Ơn!</h1>
-        <p className="subtitle" style={{ marginTop: "1rem" }}>
-          Hãy bắt đầu sử dụng AI agents một cách hiệu quả! 🚀
-        </p>
       </div>
     </div>
   )

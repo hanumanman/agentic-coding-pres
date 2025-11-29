@@ -1,4 +1,4 @@
-export default function Slide7() {
+export default function StrategySlide() {
   return (
     <div className="slide">
       <h2>🎯 Chiến Lược Sử Dụng Hiệu Quả</h2>
@@ -30,12 +30,6 @@ export default function Slide7() {
           <strong>Cung cấp context liên quan:</strong> Đủ nhưng không dư thừa
         </li>
       </ol>
-
-      <div className="highlight-box">
-        <p>
-          <strong>⚠️ Quan trọng nhất:</strong> LUÔN REVIEW THỦ CÔNG!
-        </p>
-      </div>
     </div>
   )
 }

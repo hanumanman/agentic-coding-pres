@@ -1,4 +1,4 @@
-export default function Slide1() {
+export default function TitleSlide() {
   return (
     <div className="slide title-slide">
       <h1>🤖 AGENTIC CODING</h1>
