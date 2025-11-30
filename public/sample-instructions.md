@@ -21,26 +21,31 @@ This document provides compact, practical rules for producing readable, maintain
 
 ```ts
 // Hard to follow: nested ternaries and compressed logic.
-const status = user
-  ? user.isActive
-    ? "active"
-    : user.isPending
-      ? "pending"
-      : "inactive"
-  : "unknown"
+function getUserStatus(user?: User): string {
+  return user
+    ? user.isActive
+      ? "active"
+      : user.isPending
+        ? "pending"
+        : "inactive"
+    : "unknown"
+}
 ```
 
 - Good (TypeScript):
 
 ```ts
 interface User {
-  id: string
-  isExpired?: boolean
+  isActive?: boolean
+  isPending?: boolean
 }
-const users: User[] = [] // example
-const activeUsers: User[] = users.filter(user => !user.isExpired)
-const activeUserIds: string[] = activeUsers.map(user => user.id)
-const anyActiveUserId: string | undefined = activeUserIds[0]
+
+function getUserStatus(user?: User): string {
+  if (!user) return "unknown"
+  if (user.isActive) return "active"
+  if (user.isPending) return "pending"
+  return "inactive"
+}
 ```
 
 - Note: Using chainable methods like `filter` → `map` → `find` is _not_ inherently bad — it's concise and declarative. The issue arises when variable names are unclear or the chain contains side effects.
@@ -48,7 +53,7 @@ const anyActiveUserId: string | undefined = activeUserIds[0]
 
 ```ts
 const firstActiveUserId = users
-  .filter(user => !user.isExpired)
+  .filter(user => user.isActive)
   .map(user => user.id)
   .find(Boolean)
 ```
@@ -95,44 +100,51 @@ function process(u?: User): string | undefined {
 - Bad (TypeScript):
 
 ```ts
-interface User {
-  id: string
-}
-const db: Record<string, User> = {}
-function addUser(user: User): void {
-  // mutation of global state
-  db[user.id] = user
+let totalPrice = 0
+
+function addItemToCart(item: CartItem): void {
+  cart.push(item)
+  totalPrice += item.price // hidden mutation of global state
 }
 ```
 
 - Good (TypeScript):
 
 ```ts
-type DBState = Record<string, User>
-function addUser(dbState: DBState, user: User): DBState {
-  return { ...dbState, [user.id]: user }
+interface Cart {
+  items: CartItem[]
+  totalPrice: number
 }
-// call site decides how to persist the return value
-```
 
-- Keep the pattern: return a new state instead of mutating (use the equivalent approach in your language).
+function addItemToCart(cart: Cart, item: CartItem): Cart {
+  return {
+    items: [...cart.items, item],
+    totalPrice: cart.totalPrice + item.price
+  }
+}
+// caller decides how to persist the new cart state
+```
 
 4. Use meaningful names instead of comments
 
-- Explanation: Name variables and functions so their purpose is clear — fewer “why” comments needed.
+- Explanation: Name variables and functions so their purpose is clear — fewer "why" comments needed.
 - Bad (TypeScript):
 
 ```ts
-interface User {
-  status?: string
-}
-const a = users.filter(u => u.s === "inactive")
+// Get users who haven't logged in for 30 days
+const u = users.filter(x => x.ll < Date.now() - 30 * 24 * 60 * 60 * 1000)
 ```
 
 - Good (TypeScript):
 
 ```ts
-const inactiveUsers: User[] = users.filter(user => user.status === "inactive")
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000
+
+function isInactiveUser(user: User): boolean {
+  return user.lastLoginAt < Date.now() - THIRTY_DAYS_MS
+}
+
+const inactiveUsers = users.filter(isInactiveUser)
 ```
 
 5. Use the type system and explicit contracts where available
@@ -144,6 +156,10 @@ const inactiveUsers: User[] = users.filter(user => user.status === "inactive")
 function getUser(id: any) {
   return fetch(`/api/users/${id}`).then(res => res.json())
 }
+
+// Caller has no idea what shape to expect
+const user = await getUser(123)
+console.log(user.nmae) // typo goes unnoticed
 ```
 
 - Good (TypeScript):
@@ -154,10 +170,16 @@ interface User {
   name: string
   email: string
 }
+
 async function getUser(id: string): Promise<User> {
-  const res = await fetch(`/api/users/${id}`)
-  return res.json() as Promise<User>
+  const response = await fetch(`/api/users/${id}`)
+  const data: unknown = await response.json()
+  return data as User
 }
+
+// Caller knows the shape; typos are caught at compile time
+const user = await getUser("123")
+console.log(user.name)
 ```
 
 - Note: If your language supports a typed system (TypeScript, Go, Java), prefer it; otherwise, use runtime checks and clear docstrings/comments.
@@ -168,33 +190,51 @@ async function getUser(id: string): Promise<User> {
 - Bad (TypeScript):
 
 ```ts
-interface RequestLike {
-  /* example fields */
-}
-async function handleRequest(req: RequestLike): Promise<any> {
-  // validate input
-  // call DB
-  // map results
+async function handleUserRegistration(req: Request): Promise<Response> {
+  // validation
+  if (!req.body.email || !req.body.password) {
+    return new Response("Invalid input", { status: 400 })
+  }
+  // hash password
+  const hashedPassword = await bcrypt.hash(req.body.password, 10)
+  // save to database
+  const user = await db.users.create({
+    email: req.body.email,
+    password: hashedPassword
+  })
+  // send welcome email
+  await sendEmail(user.email, "Welcome!", "Thanks for signing up")
   // build response
+  return new Response(JSON.stringify({ id: user.id }), { status: 201 })
 }
 ```
 
 - Good (TypeScript):
 
 ```ts
-function validateRequest(req: RequestLike) {
-  /* ... */
+interface RegistrationInput {
+  email: string
+  password: string
 }
-async function fetchFromDB(params: unknown): Promise<any> {
-  /* ... */
+
+function validateRegistration(body: unknown): RegistrationInput {
+  // validation logic
 }
-function buildResponse(data: any) {
-  /* ... */
+
+async function createUser(input: RegistrationInput): Promise<User> {
+  const hashedPassword = await bcrypt.hash(input.password, 10)
+  return db.users.create({ email: input.email, password: hashedPassword })
 }
-async function handleRequest(req: RequestLike) {
-  const params = validateRequest(req)
-  const data = await fetchFromDB(params)
-  return buildResponse(data)
+
+async function sendWelcomeEmail(email: string): Promise<void> {
+  await sendEmail(email, "Welcome!", "Thanks for signing up")
+}
+
+async function handleUserRegistration(req: Request): Promise<Response> {
+  const input = validateRegistration(req.body)
+  const user = await createUser(input)
+  await sendWelcomeEmail(user.email)
+  return new Response(JSON.stringify({ id: user.id }), { status: 201 })
 }
 ```
 
@@ -204,45 +244,59 @@ async function handleRequest(req: RequestLike) {
 - Bad (TypeScript):
 
 ```ts
-function process(data?: unknown) {
-  if (data) {
-    // long logic
+function calculateDiscount(user: User, order: Order): number {
+  if (user) {
+    if (order) {
+      if (order.items.length > 0) {
+        if (user.isPremium) {
+          return order.total * 0.2
+        } else {
+          return order.total * 0.1
+        }
+      }
+    }
   }
+  return 0
 }
 ```
 
 - Good (TypeScript):
 
 ```ts
-function process(data?: unknown) {
-  if (!data) return
-  // long logic
+function calculateDiscount(user?: User, order?: Order): number {
+  if (!user || !order) return 0
+  if (order.items.length === 0) return 0
+
+  const discountRate = user.isPremium ? 0.2 : 0.1
+  return order.total * discountRate
 }
 ```
 
-8. Error handling & logging — fail fast and add context
+8. Error handling & logging — fail aggressively and add context
 
 - Explanation: Add helpful error messages and avoid swallowing errors. Mask sensitive data in logs and include actionable context when rethrowing or returning an error.
 - Bad (TypeScript):
 
 ```ts
-try {
-  return await doSomething();
-} catch (e) {
-  console.error(e);
+async function processOrder(orderId: string) {
+  try {
+    return await submitOrder(orderId)
+  } catch (e) {
+    console.error(e) // Error swallowed, caller doesn't know it failed
+  }
 }
 ```
 
 - Good (TypeScript):
 
 ```ts
-try {
-  return await doSomething();
-} catch (err: unknown) {
-  if (err instanceof Error) {
-    throw new Error(`doSomething failed for id=${id}: ${err.message}`);
+async function processOrder(orderId: string): Promise<OrderResult> {
+  try {
+    return await submitOrder(orderId)
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "unknown error"
+    throw new Error(`Failed to process order ${orderId}: ${message}`)
   }
-  throw new Error("doSomething failed: unknown error");
 }
 ```
 
@@ -277,16 +331,18 @@ if (statusCode === HttpStatus.Unauthorized) {
 
 ```ts
 import express from "express"
-import _ from "lodash"
-import { Foo } from "../../../../../models/foo"
+import { z } from "zod"
+import { UserService } from "../../../../../services/user"
+import { validateEmail } from "../../../../../utils/validation"
 ```
 
 - Good (TypeScript):
 
 ```ts
-import { Foo } from "@/models/foo"
+import { UserService } from "@/services/user"
+import { validateEmail } from "@/utils/validation"
 import express from "express"
-import _ from "lodash"
+import { z } from "zod"
 ```
 
 11. Prefer immutability when feasible
@@ -295,17 +351,25 @@ import _ from "lodash"
 - Bad (TypeScript):
 
 ```ts
-interface User {
-  roles: string[]
+function updateUserSettings(user: User, newTheme: string): void {
+  user.settings.theme = newTheme // mutation can cause unexpected side effects
+  user.settings.updatedAt = Date.now()
 }
-const user: User = { roles: [] }
-user.roles.push("admin")
 ```
 
 - Good (TypeScript):
 
 ```ts
-const updatedUser: User = { ...user, roles: [...user.roles, "admin"] }
+function updateUserSettings(user: User, newTheme: string): User {
+  return {
+    ...user,
+    settings: {
+      ...user.settings,
+      theme: newTheme,
+      updatedAt: Date.now()
+    }
+  }
+}
 ```
 
 12. Avoid global state; inject dependencies
@@ -314,23 +378,29 @@ const updatedUser: User = { ...user, roles: [...user.roles, "admin"] }
 - Bad (TypeScript):
 
 ```ts
-// global db client
 import { db } from "./db"
+import { logger } from "./logger"
 
-export function getUsers() {
-  return db.query("select * from users")
+export async function getActiveUsers(): Promise<User[]> {
+  logger.info("Fetching active users")
+  return db.query("SELECT * FROM users WHERE active = true")
 }
+// Hard to test: must mock global imports
 ```
 
 - Good (TypeScript):
 
 ```ts
-interface DBClient {
-  query(sql: string): Promise<any>
+interface Dependencies {
+  db: Database
+  logger: Logger
 }
-export function getUsers(dbClient: DBClient) {
-  return dbClient.query("select * from users")
+
+export async function getActiveUsers(deps: Dependencies): Promise<User[]> {
+  deps.logger.info("Fetching active users")
+  return deps.db.query("SELECT * FROM users WHERE active = true")
 }
+// Easy to test: pass mock dependencies directly
 ```
 
 13. Keep modules small and focused
@@ -343,33 +413,71 @@ export function getUsers(dbClient: DBClient) {
 
 - Explanation: Unit tests should verify the public behavior and cover edge cases. Keep tests small, fast, and deterministic.
 - Bad (no tests):
-  - A function with complex logic is added without tests.
+
+```ts
+// Complex function with no tests - bugs will only surface in production
+function calculateTax(price: number, region: string): number {
+  const rates: Record<string, number> = { US: 0.08, EU: 0.2, UK: 0.2 }
+  return price * (rates[region] ?? 0)
+}
+```
 
 - Good (TypeScript example):
 
 ```ts
-// jest + ts-jest
-import { formatDate } from "./formatDate"
+import { calculateTax } from "./tax"
 
-test("formatDate happy path", () => {
-  expect(formatDate("2020-01-01")).toBe("Jan 1, 2020")
-})
-test("formatDate invalid", () => {
-  expect(() => formatDate("not-a-date")).toThrow()
+describe("calculateTax", () => {
+  test("applies US tax rate", () => {
+    expect(calculateTax(100, "US")).toBe(8)
+  })
+
+  test("applies EU tax rate", () => {
+    expect(calculateTax(100, "EU")).toBe(20)
+  })
+
+  test("returns 0 for unknown region", () => {
+    expect(calculateTax(100, "UNKNOWN")).toBe(0)
+  })
+
+  test("handles zero price", () => {
+    expect(calculateTax(0, "US")).toBe(0)
+  })
 })
 ```
 
 15. Write clear function contracts (docs + types)
 
 - Explanation: The function signature should explain the contract. Small doc comments for complex or non-obvious behavior are fine.
+- Bad (TypeScript):
+
+```ts
+// What does this return if user is null? What format is the date?
+function fmt(u: any, d: any) {
+  return u.n + " - " + d
+}
+```
+
 - Good (TypeScript):
 
 ```ts
 interface User {
-  name?: string
+  firstName: string
+  lastName: string
 }
-function getDisplayName(user?: User): string {
-  return user?.name ?? "Unknown"
+
+/**
+ * Formats a user's full name with a formatted date.
+ * @returns Format: "FirstName LastName - Jan 1, 2020"
+ */
+function formatUserWithDate(user: User, date: Date): string {
+  const fullName = `${user.firstName} ${user.lastName}`
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  })
+  return `${fullName} - ${formattedDate}`
 }
 ```
 
