@@ -6,7 +6,7 @@ export default function StrategySlide1() {
       <h3>🤖 Chọn Model Phù Hợp:</h3>
       <div className="card" style={{ marginBottom: "1.5rem" }}>
         <p>
-          <strong>Raptor-mini:</strong> Fine-tuned từ GPT-4o mini cho VSCode
+          <strong>Raptor-mini:</strong> Fine-tuned từ GPT5-mini cho VSCode
         </p>
         <ul>
           <li>✅ Context window lớn</li>
@@ -17,9 +17,8 @@ export default function StrategySlide1() {
 
       <div className="highlight-box">
         <p>
-          <strong>💡 Lưu ý:</strong> Model mạnh hơn không phải lúc nào cũng tốt
-          hơn. Chọn model phù hợp với độ phức tạp của task để tối ưu chi phí và
-          tốc độ.
+          <strong>💡</strong>Chọn model phù hợp với độ phức tạp của task để tối
+          ưu chi phí và tốc độ.
         </p>
       </div>
     </div>
