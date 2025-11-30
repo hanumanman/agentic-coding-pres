@@ -6,7 +6,7 @@ export default function StrategySlide2() {
       <h3>✍️ Viết Prompt Hiệu Quả:</h3>
       <ol>
         <li>
-          <strong>Giữ phạm vi nhỏ gọn:</strong> Tập trung vào 1 vấn đề cụ thể/
+          <strong>Giữ phạm vi nhỏ gọn:</strong> Tập trung vào 1 vấn đề cụ thể.
         </li>
         <li>
           <strong>Lập kế hoạch trước:</strong> Phác thảo các bước cần làm.
