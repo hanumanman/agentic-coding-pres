@@ -84,7 +84,7 @@ export default function WritingRulesSlide2() {
 
       <div className="highlight-box" style={{ marginTop: "2rem" }}>
         <p>
-          <strong>💡 Pro Tip:</strong> Sử dụng code examples thực tế từ codebase
+          <strong>💡 Pro Tip:</strong> Sử dụng ví dụ code thực tế từ codebase
           của bạn trong rules - điều này giúp AI hiểu context và conventions tốt
           hơn nhiều so với mô tả chung chung.
         </p>

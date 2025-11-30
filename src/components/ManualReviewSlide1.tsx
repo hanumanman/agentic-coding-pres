@@ -12,7 +12,7 @@ export default function ManualReviewSlide1() {
       </div>
 
       <div className="card" style={{ marginBottom: "1.5rem" }}>
-        <h4>1. 🔐 Security Vulnerabilities</h4>
+        <h4>1. 🔐 Lỗ hổng bảo mật</h4>
         <p style={{ fontSize: "0.95rem", marginBottom: "0.5rem" }}>
           <strong>Ví dụ thực tế:</strong> AI có thể generate SQL queries mà quên
           sanitize user input → SQL injection. Hoặc expose sensitive data trong
@@ -34,7 +34,7 @@ const query = \`SELECT * FROM users WHERE id=\${req.params.id}\``}
       </div>
 
       <div className="card" style={{ marginBottom: "1.5rem" }}>
-        <h4>2. 🧩 Business Logic Misunderstanding</h4>
+        <h4>2. 🧩 Hiểu nhầm Business Logic</h4>
         <p style={{ fontSize: "0.95rem" }}>
           AI thiếu context về domain, edge cases của business. Ví dụ: xử lý
           refund có thể cần check fraud score, inventory status, payment gateway

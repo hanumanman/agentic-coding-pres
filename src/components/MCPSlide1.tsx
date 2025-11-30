@@ -12,7 +12,10 @@ export default function MCPSlide1() {
       </div>
 
       <div className="grid-2">
-        <div className="card">
+        <div
+          className="card"
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
           <h4>🌐 Context7 MCP</h4>
           <p>Fetch documentation từ libraries/frameworks phổ biến</p>
           <ul style={{ fontSize: "0.95rem" }}>
@@ -26,7 +29,7 @@ export default function MCPSlide1() {
             rel="noopener noreferrer"
             style={{
               fontSize: "0.9rem",
-              marginTop: "0.5rem",
+              marginTop: "auto",
               display: "inline-block"
             }}
           >
@@ -34,7 +37,10 @@ export default function MCPSlide1() {
           </a>
         </div>
 
-        <div className="card">
+        <div
+          className="card"
+          style={{ display: "flex", flexDirection: "column", height: "100%" }}
+        >
           <h4>📚 DeepWiki MCP</h4>
           <p>Tài liệu AI cho rất nhiều public GitHub repo</p>
           <ul style={{ fontSize: "0.95rem" }}>
@@ -47,7 +53,7 @@ export default function MCPSlide1() {
             rel="noopener noreferrer"
             style={{
               fontSize: "0.9rem",
-              marginTop: "0.5rem",
+              marginTop: "auto",
               display: "inline-block"
             }}
           >

@@ -17,7 +17,7 @@ export default function ResourcesSlide() {
               </a>
               <br />
               <span style={{ fontSize: "0.9rem", color: "#666" }}>
-                AI coding tips & tricks
+                AI coding + content về web dev nói chung
               </span>
             </li>
             <li>
@@ -30,7 +30,7 @@ export default function ResourcesSlide() {
               </a>
               <br />
               <span style={{ fontSize: "0.9rem", color: "#666" }}>
-                Agentic workflows
+                Vibe coder
               </span>
             </li>
           </ul>

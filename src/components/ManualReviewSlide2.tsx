@@ -4,7 +4,7 @@ export default function ManualReviewSlide2() {
       <h2>⚠️ Manual Review - Tại Sao Bắt Buộc Phải Kiểm Tra? (2/2)</h2>
 
       <div className="card" style={{ marginBottom: "1.5rem" }}>
-        <h4>3. 🐛 Performance Issues</h4>
+        <h4>3. 🐛 Hiệu năng </h4>
         <p style={{ fontSize: "0.95rem" }}>
           AI có thể tạo code chạy được nhưng không tối ưu. Ví dụ: query N+1,
           không cache, hoặc load toàn bộ dataset vào memory.
@@ -12,10 +12,10 @@ export default function ManualReviewSlide2() {
       </div>
 
       <div className="card" style={{ marginBottom: "1.5rem" }}>
-        <h4>4. 🧪 Test Coverage Gaps</h4>
+        <h4>4. 🧪 Test</h4>
         <p style={{ fontSize: "0.95rem" }}>
-          AI viết tests nhưng có thể miss edge cases quan trọng hoặc tạo tests
-          quá shallow (chỉ test happy path).
+          AI viết tests nhưng có thể thiếu edge cases quan trọng hoặc tạo tests
+          quá đơn giản (chỉ test happy path).
         </p>
       </div>
 

@@ -10,7 +10,7 @@ export default function MCPSlide2() {
             <a href="https://cli.github.com/">
               <strong>GitHub CLI</strong>
             </a>{" "}
-            có thể thay thế cho GitHub MCP
+            có thể thay thế cho GitHub MCP.
           </li>
           <li>
             <strong>Danh sách các MCP servers:</strong>{" "}
@@ -29,9 +29,9 @@ export default function MCPSlide2() {
         <h4>🛠️ Tự tạo MCP server của riêng bạn</h4>
         <p>MCP cho phép bạn tạo custom integrations cho:</p>
         <ul style={{ fontSize: "0.95rem", marginTop: "1rem" }}>
-          <li>Internal APIs và databases của công ty</li>
-          <li>Private documentation và knowledge bases</li>
-          <li>Custom tools và workflows</li>
+          <li>Internal APIs và databases của công ty.</li>
+          <li>Private documentation và knowledge bases.</li>
+          <li>Custom tools và workflows.</li>
         </ul>
       </div>
     </div>

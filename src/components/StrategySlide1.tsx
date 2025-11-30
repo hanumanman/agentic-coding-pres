@@ -6,12 +6,13 @@ export default function StrategySlide1() {
       <h3>🤖 Chọn Model Phù Hợp:</h3>
       <div className="card" style={{ marginBottom: "1.5rem" }}>
         <p>
-          <strong>Raptor-mini:</strong> Fine-tuned từ GPT5-mini cho VSCode
+          <strong>Raptor-mini:</strong> Custom model tinh chỉnh từ GPT5-mini cho
+          VSCode
         </p>
         <ul>
-          <li>✅ Context window lớn</li>
-          <li>✅ Phù hợp với tác vụ đơn giản cần nhiều context</li>
-          <li>✅ Chi phí thấp</li>
+          <li>✅ Context window lớn.</li>
+          <li>✅ Phù hợp với tác vụ đơn giản cần nhiều context.</li>
+          <li>✅ Chi phí thấp.</li>
         </ul>
       </div>
 

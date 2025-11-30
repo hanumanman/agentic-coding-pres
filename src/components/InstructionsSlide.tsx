@@ -23,15 +23,15 @@ export default function InstructionsSlide() {
         <ul>
           <li>
             <strong>Tính nhất quán:</strong> Đảm bảo AI tuân theo chuẩn code của
-            dự án
+            dự án.
           </li>
           <li>
             <strong>Chất lượng code:</strong> Hướng dẫn AI viết code dễ đọc, bảo
-            trì
+            trì.
           </li>
           <li>
             <strong>Giảm thiểu lỗi:</strong> Định nghĩa rõ ràng những gì nên và
-            không nên làm
+            không nên làm.
           </li>
         </ul>
       </div>

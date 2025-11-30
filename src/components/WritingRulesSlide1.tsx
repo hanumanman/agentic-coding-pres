@@ -13,18 +13,18 @@ export default function WritingRulesSlide1() {
       <ul>
         <li>
           <strong>Sử dụng ví dụ "Bad" và "Good":</strong> Minh họa rõ ràng những
-          gì nên và không nên làm
+          gì nên và không nên làm.
         </li>
         <li>
           <strong>Cụ thể hơn chung chung:</strong> "Đặt tên biến theo camelCase"
-          tốt hơn "Code phải sạch"
+          tốt hơn "Code phải sạch".
         </li>
         <li>
           <strong>Giải thích lý do:</strong> Tại sao quy tắc này quan trọng?
         </li>
         <li>
           <strong>Thêm context:</strong> Khi nào áp dụng, khi nào có thể ngoại
-          lệ
+          lệ.
         </li>
       </ul>
     </div>
