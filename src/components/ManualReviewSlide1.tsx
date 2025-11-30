@@ -1,7 +1,7 @@
-export default function ManualReviewSlide() {
+export default function ManualReviewSlide1() {
   return (
     <div className="slide">
-      <h2>⚠️ Manual Review - Tại Sao Bắt Buộc Phải Kiểm Tra?</h2>
+      <h2>⚠️ Manual Review - Tại Sao Bắt Buộc Phải Kiểm Tra? (1/2)</h2>
 
       <div className="highlight-box" style={{ marginBottom: "2rem" }}>
         <p>
@@ -39,14 +39,6 @@ const query = \`SELECT * FROM users WHERE id=\${req.params.id}\``}
           AI thiếu context về domain, edge cases của business. Ví dụ: xử lý
           refund có thể cần check fraud score, inventory status, payment gateway
           state - những điều AI không tự hiểu được từ prompt đơn giản.
-        </p>
-      </div>
-
-      <div className="card" style={{ marginBottom: "1.5rem" }}>
-        <h4>5. 🔄 Breaking Changes</h4>
-        <p style={{ fontSize: "0.9rem" }}>
-          AI có thể thay đổi API contracts, xóa function đang được dùng, hoặc
-          refactor theo cách không backward compatibility.
         </p>
       </div>
     </div>

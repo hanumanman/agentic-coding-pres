@@ -1,7 +1,7 @@
-export default function WritingRulesSlide() {
+export default function WritingRulesSlide1() {
   return (
     <div className="slide">
-      <h2>🎓 Viết Rules Hiệu Quả</h2>
+      <h2>🎓 Viết Rules Hiệu Quả (1/2)</h2>
 
       <div className="highlight-box">
         <p style={{ fontSize: "1.4rem" }}>
@@ -27,28 +27,6 @@ export default function WritingRulesSlide() {
           lệ
         </li>
       </ul>
-
-      <div
-        style={{
-          marginTop: "2rem",
-          background: "#f0f7ff",
-          padding: "1.5rem",
-          borderRadius: "8px"
-        }}
-      >
-        <p>
-          <strong>📂 Cấu trúc đề xuất:</strong>
-        </p>
-        <ul style={{ marginTop: "1rem", textAlign: "left" }}>
-          <li>
-            <strong>Project-wide rules:</strong> Code style, naming, cấu trúc dự
-            án
-          </li>
-          <li>
-            <strong>System-level rules:</strong> Code style chung
-          </li>
-        </ul>
-      </div>
     </div>
   )
 }

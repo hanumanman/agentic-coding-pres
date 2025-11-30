@@ -1,15 +1,32 @@
 import { useEffect, useState } from "react"
 import "./App.css"
-import Slide1 from "./components/Slide1"
-import Slide2 from "./components/Slide2"
-import Slide3 from "./components/Slide3"
-import Slide4 from "./components/Slide4"
-import Slide5 from "./components/Slide5"
-import Slide6 from "./components/Slide6"
-import Slide7 from "./components/Slide7"
-import Slide8 from "./components/Slide8"
+import InstructionsSlide from "./components/InstructionsSlide"
+import MCPSlide1 from "./components/MCPSlide1"
+import MCPSlide2 from "./components/MCPSlide2"
+import ManualReviewSlide1 from "./components/ManualReviewSlide1"
+import ManualReviewSlide2 from "./components/ManualReviewSlide2"
+import ResourcesSlide from "./components/ResourcesSlide"
+import StrategySlide1 from "./components/StrategySlide1"
+import StrategySlide2 from "./components/StrategySlide2"
+import ThankSlide from "./components/ThankSlide"
+import TitleSlide from "./components/TitleSlide"
+import WritingRulesSlide1 from "./components/WritingRulesSlide1"
+import WritingRulesSlide2 from "./components/WritingRulesSlide2"
 
-const slides = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7, Slide8]
+const slides = [
+  TitleSlide,
+  InstructionsSlide,
+  WritingRulesSlide1,
+  WritingRulesSlide2,
+  MCPSlide1,
+  MCPSlide2,
+  StrategySlide1,
+  StrategySlide2,
+  ManualReviewSlide1,
+  ManualReviewSlide2,
+  ResourcesSlide,
+  ThankSlide
+]
 
 function App() {
   const [currentSlide, setCurrentSlide] = useState(0)

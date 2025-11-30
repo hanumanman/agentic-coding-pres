@@ -1,7 +1,7 @@
-export default function MCPSlide() {
+export default function MCPSlide1() {
   return (
     <div className="slide">
-      <h2>🔌 MCP - Model Context Protocol</h2>
+      <h2>🔌 MCP - Model Context Protocol (1/2)</h2>
 
       <div className="highlight-box" style={{ marginBottom: "2rem" }}>
         <p>
@@ -54,25 +54,6 @@ export default function MCPSlide() {
             → deepwiki.org/
           </a>
         </div>
-      </div>
-
-      <div className="highlight-box" style={{ marginTop: "2rem" }}>
-        <h3>💡 Pro Tips:</h3>
-        <ul style={{ marginTop: "1rem" }}>
-          <li>
-            <strong>GitHub CLI</strong> có thể thay thế cho GitHub MCP
-          </li>
-          <li>
-            <strong>Browse MCP servers:</strong>{" "}
-            <a
-              href="https://mcpservers.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              mcpservers.org/
-            </a>
-          </li>
-        </ul>
       </div>
     </div>
   )
